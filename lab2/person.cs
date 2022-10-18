@@ -77,9 +77,7 @@ namespace Obuch
             public Exam()
             {
 
-                this.dicipline = "";
-                this.score = 0;
-                this.ExamDate = new DateTime(1999, 01, 01);
+
             }
             public string ToFullString()
             {
@@ -136,16 +134,14 @@ namespace Obuch
             {
                 get
                 {
-                    return AvarageRate;
+                    return sdal.Average(ex => ex.score);
                 }
-                set
-                {
-                    AvarageRate = new Exam().score / sdal.Length;
-                }
+
             }
             public void addExams(params Exam[] exam)
             {
-
+                for (int i = 0; i < exam.Length; i++)
+                    sdal[i] = exam[i];
             }
             public string ToFullString()
             {
@@ -160,16 +156,28 @@ namespace Obuch
         {
             Person p1 = new Person();
             p1.Name = "John";
-            p1.Secondname = "wwwww";
-            p1.Birthday = DateTime.Parse("01.02.99");
             Exam e1 = new Exam();
+            e1.dicipline = "phys";
+            e1.score = 4;
+            e1.ExamDate = DateTime.Parse("04.02.19.12:22");
+            Exam e2 = new Exam();
             e1.dicipline = "math";
             e1.score = 4;
             e1.ExamDate = DateTime.Parse("04.02.19.12:22");
+            Exam e3 = new Exam();
+            e1.dicipline = "inf";
+            e1.score = 4;
+            e1.ExamDate = DateTime.Parse("04.02.19.12:22");
             Student s1 = new Student();
-            s1.Info = p1;
-            s1.Form = Education.Specialist;
-            s1.Group = 2101;
+            Exam[] examen = new Exam[3];
+            examen[0] = new Exam("Физика", e1.score, e1.ExamDate);
+            examen[1] = new Exam("Математика", e2.score, e2.ExamDate);
+            examen[2] = new Exam("Информатика", e3.score, e3.ExamDate);
+            Student stud = new Student(p1, Education.Bachelor, 109);
+            stud.Sdal = examen;
+            stud.addExams(examen);
+
+            Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
             Console.WriteLine(e1.ToFullString());
             Console.WriteLine(s1.ToFullString());
