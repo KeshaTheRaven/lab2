@@ -76,7 +76,9 @@ namespace Obuch
             }
             public Exam()
             {
-
+                dicipline = "sport";
+                score = 0;
+                ExamDate = DateTime.Parse("01.01.01");
 
             }
             public string ToFullString()
@@ -98,6 +100,7 @@ namespace Obuch
                 this.info = info;
                 this.form = form;
                 this.group = group;
+                this.sdal = new Exam[group];
             }
 
             public Student()
@@ -105,6 +108,7 @@ namespace Obuch
                 this.info = new Person();
                 this.group = 0;
                 this.form = Education.Bachelor;
+                this.sdal = new Exam[group];
             }
 
             public Person Info
@@ -138,10 +142,9 @@ namespace Obuch
                 }
 
             }
-            public void addExams(params Exam[] exam)
+            public void addExams(Exam[] exam, Exam[] sdal )
             {
-                for (int i = 0; i < exam.Length; i++)
-                    sdal[i] = exam[i];
+                Array.Copy(exam, 0, sdal, 0, exam.Length);
             }
             public string ToFullString()
             {
@@ -174,7 +177,6 @@ namespace Obuch
             examen[1] = new Exam("Математика", e2.score, e2.ExamDate);
             examen[2] = new Exam("Информатика", e3.score, e3.ExamDate);
             Student stud = new Student(p1, Education.Bachelor, 109);
-            stud.Sdal = examen;
             stud.addExams(examen);
 
             Console.WriteLine(stud.AvarageRate);
