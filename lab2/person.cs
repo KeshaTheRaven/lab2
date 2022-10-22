@@ -100,7 +100,7 @@ namespace Obuch
                 this.info = info;
                 this.form = form;
                 this.group = group;
-                this.sdal = new Exam[group];
+                this.sdal = new Exam[0];
             }
 
             public Student()
@@ -108,7 +108,7 @@ namespace Obuch
                 this.info = new Person();
                 this.group = 0;
                 this.form = Education.Bachelor;
-                this.sdal = new Exam[group];
+                this.sdal = new Exam[0];
             }
 
             public Person Info
@@ -142,9 +142,11 @@ namespace Obuch
                 }
 
             }
-            public void addExams(Exam[] exam, Exam[] sdal )
+            public void addExams(Exam[] exam )
             {
-                Array.Copy(exam, 0, sdal, 0, exam.Length);
+                int [] temp = new int[sdal.Length+3];
+                
+                
             }
             public string ToFullString()
             {
@@ -162,20 +164,20 @@ namespace Obuch
             Exam e1 = new Exam();
             e1.dicipline = "phys";
             e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19.12:22");
+            e1.ExamDate = DateTime.Parse("04.02.19");
             Exam e2 = new Exam();
             e1.dicipline = "math";
             e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19.12:22");
+            e1.ExamDate = DateTime.Parse("04.02.19");
             Exam e3 = new Exam();
             e1.dicipline = "inf";
             e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19.12:22");
+            e1.ExamDate = DateTime.Parse("04.02.19");
             Student s1 = new Student();
             Exam[] examen = new Exam[3];
-            examen[0] = new Exam("Физика", e1.score, e1.ExamDate);
-            examen[1] = new Exam("Математика", e2.score, e2.ExamDate);
-            examen[2] = new Exam("Информатика", e3.score, e3.ExamDate);
+            examen[0] = new Exam(e1.dicipline, e1.score, e1.ExamDate);
+            examen[1] = new Exam(e2.dicipline, e2.score, e2.ExamDate);
+            examen[2] = new Exam(e3.dicipline, e3.score, e3.ExamDate);
             Student stud = new Student(p1, Education.Bachelor, 109);
             stud.addExams(examen);
 
