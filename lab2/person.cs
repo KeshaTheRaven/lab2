@@ -72,7 +72,9 @@
                 this.ExamDate = ExamDate;
             }
             private Exam() : this("Default", 5, new DateTime(2008, 6, 1))
-            { }
+            {
+            }
+            
             public string ToFullString()
             {
                 return $"Наименование: {dicipline}, оценка: {Grade}, дата экзамена: {ExamDate}";
@@ -127,13 +129,21 @@
                 }
 
             }
-            public void addExams(params Exam[] exams)
+            public void AddExams(params Exam[] examen)
             {
-                _passedExams.AddRange(exams);
+                _passedExams.AddRange(examen);
+                for (int i = 0; i < _passedExams.Count; i++)
+                {
+                    Console.WriteLine(_passedExams[i].dicipline);
+                    Console.WriteLine(_passedExams[i].Grade);
+                    Console.WriteLine(_passedExams[i].ExamDate);
+                }
+
             }
-            public string ToFullString()
+            public void ToFullString()
             {
-                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена: {_passedExams}";
+                Console.WriteLine($"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена:");
+                
             }
             public string ToShortString(string _name, string _secondname)
             {
@@ -147,16 +157,22 @@
             List<Exam> exams = new List<Exam>();
             
             Student s1 = new Student();
-            Exam[] examen = new Exam[3];
+            Exam[] examen = new Exam[5];
             examen[0] = new Exam("math", 4, new DateTime(2008, 6, 1));
-            examen[1] = new Exam("phys", 4, new DateTime(2008, 6, 1));
-            examen[2] = new Exam("inf", 4, new DateTime(2008, 6, 1));
+            examen[1] = new Exam("phys", 4, new DateTime(2006, 6, 1));
+            examen[2] = new Exam("inf", 4, new DateTime(2001, 6, 1));
+            examen[3] = new Exam("inf", 3, new DateTime(2002, 6, 1));
+            examen[4] = new Exam("inf", 3, new DateTime(2003, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
-            stud.addExams(examen);
+            stud.AddExams(examen);
 
             Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
-            Console.WriteLine(s1.ToFullString());
+            s1.ToFullString();
+
+
+            
+
         }
     }
 }
