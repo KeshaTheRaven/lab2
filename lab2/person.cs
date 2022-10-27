@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Obuch
+﻿namespace Obuch
 {
     class Program
     {
@@ -65,25 +62,20 @@ namespace Obuch
         class Exam
         {
             public string dicipline;
-            public int score;
+            public int Grade;
             public DateTime ExamDate;
 
             public Exam(string dicipline, int score, DateTime ExamDate)
             {
                 this.dicipline = dicipline;
-                this.score = score;
+                this.Grade = score;
                 this.ExamDate = ExamDate;
             }
-            public Exam()
-            {
-                dicipline = "sport";
-                score = 0;
-                ExamDate = DateTime.Parse("01.01.01");
-
-            }
+            private Exam() : this("Default", 5, new DateTime(2008, 6, 1))
+            { }
             public string ToFullString()
             {
-                return $"Наименование: {dicipline}, оценка: {score}, дата экзамена: {ExamDate}";
+                return $"Наименование: {dicipline}, оценка: {Grade}, дата экзамена: {ExamDate}";
             }
 
         }
@@ -92,7 +84,7 @@ namespace Obuch
             private Person info;
             private Education form;
             private int group;
-            private Exam[] sdal;
+            private readonly List<Exam> _passedExams = new List<Exam>();
 
 
             public Student(Person info, Education form, int group)
@@ -100,7 +92,7 @@ namespace Obuch
                 this.info = info;
                 this.form = form;
                 this.group = group;
-                this.sdal = new Exam[0];
+                
             }
 
             public Student()
@@ -108,7 +100,7 @@ namespace Obuch
                 this.info = new Person();
                 this.group = 0;
                 this.form = Education.Bachelor;
-                this.sdal = new Exam[0];
+                
             }
 
             public Person Info
@@ -126,31 +118,22 @@ namespace Obuch
                 get { return group; }
                 set { group = value; }
             }
-            public Exam[] Sdal
-            {
-                get { return sdal; }
-                set
-                {
-                    sdal = value;
-                }
-            }
+            
             public double AvarageRate
             {
                 get
                 {
-                    return sdal.Average(ex => ex.score);
+                    return _passedExams.Average(ex => ex.Grade);
                 }
 
             }
-            public void addExams(Exam[] exam )
+            public void addExams(params Exam[] exams)
             {
-                int [] temp = new int[sdal.Length+3];
-                
-                
+                _passedExams.AddRange(exams);
             }
             public string ToFullString()
             {
-                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена: {sdal}";
+                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена: {_passedExams}";
             }
             public string ToShortString(string _name, string _secondname)
             {
@@ -161,31 +144,19 @@ namespace Obuch
         {
             Person p1 = new Person();
             p1.Name = "John";
-            Exam e1 = new Exam();
-            e1.dicipline = "phys";
-            e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19");
-            Exam e2 = new Exam();
-            e1.dicipline = "math";
-            e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19");
-            Exam e3 = new Exam();
-            e1.dicipline = "inf";
-            e1.score = 4;
-            e1.ExamDate = DateTime.Parse("04.02.19");
+            List<Exam> exams = new List<Exam>();
+            
             Student s1 = new Student();
             Exam[] examen = new Exam[3];
-            examen[0] = new Exam(e1.dicipline, e1.score, e1.ExamDate);
-            examen[1] = new Exam(e2.dicipline, e2.score, e2.ExamDate);
-            examen[2] = new Exam(e3.dicipline, e3.score, e3.ExamDate);
+            examen[0] = new Exam("math", 4, new DateTime(2008, 6, 1));
+            examen[1] = new Exam("phys", 4, new DateTime(2008, 6, 1));
+            examen[2] = new Exam("inf", 4, new DateTime(2008, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
             stud.addExams(examen);
 
             Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
-            Console.WriteLine(e1.ToFullString());
             Console.WriteLine(s1.ToFullString());
-
         }
     }
 }
