@@ -10,9 +10,9 @@
         }
         public class Person
         {
-            private string name;
-            private string secondname;
-            private DateTime birthday;
+            public string name;
+            public string secondname;
+            public DateTime birthday;
 
 
             public Person(string name, string secondname, DateTime birthday)
@@ -71,7 +71,7 @@
                 this.Grade = score;
                 this.ExamDate = ExamDate;
             }
-            private Exam() : this("Default", 5, new DateTime(2008, 6, 1))
+            public Exam() : this("Default", 5, new DateTime(2008, 6, 1))
             {
             }
             
@@ -83,10 +83,10 @@
         }
         class Student
         {
-            private Person info;
-            private Education form;
-            private int group;
-            private readonly List<Exam> _passedExams = new List<Exam>();
+            public Person info;
+            public Education form;
+            public int group;
+            public Exam[] _passedExams;
 
 
             public Student(Person info, Education form, int group)
@@ -94,6 +94,8 @@
                 this.info = info;
                 this.form = form;
                 this.group = group;
+                this._passedExams = new Exam[0];
+                
                 
             }
 
@@ -102,6 +104,7 @@
                 this.info = new Person();
                 this.group = 0;
                 this.form = Education.Bachelor;
+                this._passedExams = new Exam[0];
                 
             }
 
@@ -129,21 +132,24 @@
                 }
 
             }
-            public void AddExams(params Exam[] examen)
+            public void addExams(Exam[] examen)
             {
-                _passedExams.AddRange(examen);
-                for (int i = 0; i < _passedExams.Count; i++)
-                {
-                    Console.WriteLine(_passedExams[i].dicipline);
-                    Console.WriteLine(_passedExams[i].Grade);
-                    Console.WriteLine(_passedExams[i].ExamDate);
-                }
+                _passedExams = new Exam[_passedExams.Length+examen.Length];
+                examen.CopyTo(_passedExams, 0);
+                //for (int i = 0; i < _passedExams.Length; i++)
+                //{
+                //    Console.WriteLine(_passedExams[i].dicipline);
+                //    Console.WriteLine(_passedExams[i].Grade);
+                //    Console.WriteLine(_passedExams[i].ExamDate);
+                //}
 
             }
             public void ToFullString()
             {
                 Console.WriteLine($"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена:");
                 
+
+
             }
             public string ToShortString(string _name, string _secondname)
             {
@@ -154,8 +160,7 @@
         {
             Person p1 = new Person();
             p1.Name = "John";
-            List<Exam> exams = new List<Exam>();
-            
+
             Student s1 = new Student();
             Exam[] examen = new Exam[5];
             examen[0] = new Exam("math", 4, new DateTime(2008, 6, 1));
@@ -164,14 +169,16 @@
             examen[3] = new Exam("inf", 3, new DateTime(2002, 6, 1));
             examen[4] = new Exam("inf", 3, new DateTime(2003, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
-            stud.AddExams(examen);
+            stud.addExams(examen);
 
             Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
             s1.ToFullString();
-
-
             
+
+
+
+
 
         }
     }
