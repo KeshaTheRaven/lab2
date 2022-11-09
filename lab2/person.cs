@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using static Obuch.Program;
+
 
 namespace Obuch
 {
@@ -60,7 +62,6 @@ namespace Obuch
             }
 
         }
-
         class Exam
         {
             public string dicipline;
@@ -76,7 +77,7 @@ namespace Obuch
             public Exam() : this("Default", 5, new DateTime(2008, 6, 1))
             {
             }
-            
+
             public string ToFullString()
             {
                 return $"Наименование: {dicipline}, оценка: {Grade}, дата экзамена: {ExamDate}";
@@ -97,8 +98,8 @@ namespace Obuch
                 this.form = form;
                 this.group = group;
                 this._passedExams = new Exam[0];
-                
-                
+
+
             }
 
             public Student()
@@ -107,7 +108,7 @@ namespace Obuch
                 this.group = 0;
                 this.form = Education.Bachelor;
                 this._passedExams = new Exam[0];
-                
+
             }
 
             public Person Info
@@ -126,29 +127,22 @@ namespace Obuch
                 set { group = value; }
             }
 
-            public double AvarageRate
-            {
-                get
-                {
-                    _passedExams.Average(ex => ex.Grade);
-                }
+            public double AvarageRate => _passedExams.Average(ex => ex.Grade);
 
-            }
 
-        }
-            public void addExams(Exam[] examen)
+            public void AddExams(Exam[] examen)
             {
                 int _OldSize = _passedExams.Length;
                 Array.Resize<Exam>(ref _passedExams, _OldSize + examen.Length);
                 examen.CopyTo(_passedExams, _OldSize);
 
-                
+
 
             }
             public void ToFullString()
             {
                 Console.WriteLine($"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена:");
-                
+
 
 
             }
@@ -157,8 +151,10 @@ namespace Obuch
                 return $"студент: {info.Name} {info.Secondname} {info.Birthday},  форма обучения:{form}, группа {group}, средний балл {AvarageRate}";
             }
         }
+
         static void Main()
         {
+
             Person p1 = new Person();
             p1.Name = "John";
 
@@ -170,19 +166,21 @@ namespace Obuch
             examen[3] = new Exam("inf", 3, new DateTime(2002, 6, 1));
             examen[4] = new Exam("inf", 3, new DateTime(2003, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
-            stud.addExams(examen);
+            stud.AddExams(examen);
 
 
 
-            Console.WriteLine(stud.AvarageRate);
+            Console.WriteLine(value: stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
             s1.ToFullString();
-            
+
 
 
 
 
 
         }
+
     }
 }
+
