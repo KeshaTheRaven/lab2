@@ -1,4 +1,6 @@
-﻿namespace Obuch
+﻿using System.Linq;
+
+namespace Obuch
 {
     class Program
     {
@@ -123,25 +125,24 @@
                 get { return group; }
                 set { group = value; }
             }
-            
+
             public double AvarageRate
             {
                 get
                 {
-                    return _passedExams.Average(ex => ex.Grade);
+                    _passedExams.Average(ex => ex.Grade);
                 }
 
             }
+
+        }
             public void addExams(Exam[] examen)
             {
-                _passedExams = new Exam[_passedExams.Length+examen.Length];
-                examen.CopyTo(_passedExams, 0);
-                //for (int i = 0; i < _passedExams.Length; i++)
-                //{
-                //    Console.WriteLine(_passedExams[i].dicipline);
-                //    Console.WriteLine(_passedExams[i].Grade);
-                //    Console.WriteLine(_passedExams[i].ExamDate);
-                //}
+                int _OldSize = _passedExams.Length;
+                Array.Resize<Exam>(ref _passedExams, _OldSize + examen.Length);
+                examen.CopyTo(_passedExams, _OldSize);
+
+                
 
             }
             public void ToFullString()
@@ -170,6 +171,8 @@
             examen[4] = new Exam("inf", 3, new DateTime(2003, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
             stud.addExams(examen);
+
+
 
             Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(p1.ToFullString());
