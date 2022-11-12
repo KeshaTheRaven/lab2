@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using static Obuch.Program;
 
 
@@ -56,7 +57,7 @@ namespace Obuch
             {
                 return $"Имя: {name}, фамилия: {secondname}, дата рождения: {birthday}";
             }
-            public string ToShortString(string name, string secondname)
+            public string ToShortString()
             {
                 return $"Имя: {name}, фамилия: {secondname}";
             }
@@ -129,26 +130,23 @@ namespace Obuch
 
             public double AvarageRate => _passedExams.Average(ex => ex.Grade);
 
-
             public void AddExams(Exam[] examen)
             {
                 int _OldSize = _passedExams.Length;
                 Array.Resize<Exam>(ref _passedExams, _OldSize + examen.Length);
                 examen.CopyTo(_passedExams, _OldSize);
-
-
+                
+            }
+            public string ToFullString()
+            {
+                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результаты экзамена:{_passedExams}";
+              
 
             }
-            public void ToFullString()
+            public string ToShortString()
             {
-                Console.WriteLine($"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результат экзамена:");
-
-
-
-            }
-            public string ToShortString(string _name, string _secondname)
-            {
-                return $"студент: {info.Name} {info.Secondname} {info.Birthday},  форма обучения:{form}, группа {group}, средний балл {AvarageRate}";
+                return  $"студент: {info.Name} {info.Secondname} {info.Birthday},  форма обучения:{form}, группа {group}, средний балл {AvarageRate}";
+                
             }
         }
 
@@ -157,8 +155,6 @@ namespace Obuch
 
             Person p1 = new Person();
             p1.Name = "John";
-
-            Student s1 = new Student();
             Exam[] examen = new Exam[5];
             examen[0] = new Exam("math", 4, new DateTime(2008, 6, 1));
             examen[1] = new Exam("phys", 4, new DateTime(2006, 6, 1));
@@ -167,12 +163,12 @@ namespace Obuch
             examen[4] = new Exam("inf", 3, new DateTime(2003, 6, 1));
             Student stud = new Student(p1, Education.Bachelor, 109);
             stud.AddExams(examen);
-
+            
 
 
             Console.WriteLine(value: stud.AvarageRate);
-            Console.WriteLine(p1.ToFullString());
-            s1.ToFullString();
+            Console.WriteLine(stud.ToShortString());
+            Console.WriteLine(stud.ToFullString());
 
 
 
