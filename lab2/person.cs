@@ -50,7 +50,7 @@ namespace Obuch
             }
             public int year
             {
-                get { return year; }
+                get { return Birthday.Year; }
                 set { year = value; }
             }
             public string ToFullString()
@@ -68,6 +68,7 @@ namespace Obuch
             public string dicipline;
             public int Grade;
             public DateTime ExamDate;
+            
 
             public Exam(string dicipline, int score, DateTime ExamDate)
             {
@@ -131,16 +132,20 @@ namespace Obuch
             public double AvarageRate => _passedExams.Average(ex => ex.Grade);
 
             public void AddExams(Exam[] examen)
-            {
+            {   
                 int _OldSize = _passedExams.Length;
                 Array.Resize<Exam>(ref _passedExams, _OldSize + examen.Length);
                 examen.CopyTo(_passedExams, _OldSize);
-                
+               
+
             }
+
             public string ToFullString()
             {
-                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результаты экзамена:{_passedExams}";
-              
+                string examens = "";
+                foreach (var item in _passedExams)
+                    examens += $"{item.dicipline} {item.Grade}\n";
+                return $"студент: {info.Name} {info.Secondname} {info.Birthday}, форма обучения:{form}, группа {group}, результаты экзаменов:\n{examens}";
 
             }
             public string ToShortString()
