@@ -19,7 +19,6 @@ namespace Obuch
             public string secondname;
             public DateTime birthday;
 
-
             public Person(string name, string secondname, DateTime birthday)
             {
                 this.name = name;
@@ -48,11 +47,11 @@ namespace Obuch
                 get { return birthday; }
                 set { birthday = value; }
             }
-            public int year
-            {
-                get { return Birthday.Year; }
-                set { year = value; }
-            }
+            //public int year
+            //{
+            //    get { return Birthday.Year; }
+            //    set { year = value; }
+            //}
             public string ToFullString()
             {
                 return $"Имя: {name}, фамилия: {secondname}, дата рождения: {birthday}";
@@ -93,15 +92,12 @@ namespace Obuch
             public int group;
             public Exam[] _passedExams;
 
-
             public Student(Person info, Education form, int group)
             {
                 this.info = info;
                 this.form = form;
                 this.group = group;
                 this._passedExams = new Exam[0];
-
-
             }
 
             public Student()
@@ -110,7 +106,6 @@ namespace Obuch
                 this.group = 0;
                 this.form = Education.Bachelor;
                 this._passedExams = new Exam[0];
-
             }
 
             public Person Info
@@ -136,8 +131,6 @@ namespace Obuch
                 int _OldSize = _passedExams.Length;
                 Array.Resize<Exam>(ref _passedExams, _OldSize + examen.Length);
                 examen.CopyTo(_passedExams, _OldSize);
-               
-
             }
 
             public string ToFullString()
@@ -151,35 +144,30 @@ namespace Obuch
             public string ToShortString()
             {
                 return  $"студент: {info.Name} {info.Secondname} {info.Birthday},  форма обучения:{form}, группа {group}, средний балл {AvarageRate}";
-                
             }
         }
 
         static void Main()
         {
-
             Person p1 = new Person();
             p1.Name = "John";
+            p1.secondname = "Smith";
+
             Exam[] examen = new Exam[5];
             examen[0] = new Exam("Математика", 4, new DateTime(2008, 6, 1));
             examen[1] = new Exam("Физика", 4, new DateTime(2006, 6, 1));
             examen[2] = new Exam("Информатика", 4, new DateTime(2001, 6, 1));
             examen[3] = new Exam("География", 3, new DateTime(2002, 6, 1));
             examen[4] = new Exam("Изо", 3, new DateTime(2003, 6, 1));
+
             Student stud = new Student(p1, Education.Bachelor, 109);
+
             stud.AddExams(examen);
-            
-
-
-            Console.WriteLine(value: stud.AvarageRate);
+            Console.WriteLine(stud.ToFullString());
+            stud.AddExams(examen);
+            Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(stud.ToShortString());
             Console.WriteLine(stud.ToFullString());
-
-
-
-
-
-
         }
 
     }
