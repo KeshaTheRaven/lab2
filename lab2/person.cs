@@ -47,11 +47,11 @@ namespace Obuch
                 get { return birthday; }
                 set { birthday = value; }
             }
-            //public int year
-            //{
-            //    get { return Birthday.Year; }
-            //    set { year = value; }
-            //}
+            public int year
+            {
+                get { return Birthday.Year; }
+                set { Birthday = new DateTime(value, birthday.Month,birthday.Day); }
+            }
             public string ToFullString()
             {
                 return $"Имя: {name}, фамилия: {secondname}, дата рождения: {birthday}";
@@ -168,6 +168,8 @@ namespace Obuch
             Console.WriteLine(stud.AvarageRate);
             Console.WriteLine(stud.ToShortString());
             Console.WriteLine(stud.ToFullString());
+            p1.year = 199;
+            Console.WriteLine(stud.ToShortString());
         }
 
     }
